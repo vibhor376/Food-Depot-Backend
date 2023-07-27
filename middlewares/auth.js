@@ -1,14 +1,20 @@
 import ErrorHandler from "../utils/ErrorHandler.js";
 import jwt from "jsonwebtoken";
 export const isAuthenticated = (req, res, next) => {
+    const token = req.header('auth-token');
+    console.log(token);
+    if (!token) {
+        return res.status(401).send({
+            err: "Invalid token"
+        });
+    }
     try {
-        const { token } = req.body;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET,)
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
-        next();
     } catch (err) {
         return next(new ErrorHandler("Invalid Token", 401));
     }
+    next();
 };
 
 export const authorizeAdmin = (req, res, next) => {

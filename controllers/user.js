@@ -23,10 +23,10 @@ export const register = async (req, res, next) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = new User({
+        const newUser = await User.create({
+            name,
             email,
             password: hashedPassword,
-            name,
         });
         const token = jwt.sign(
             { user: { name, email, role: newUser.role, id: newUser._id } },

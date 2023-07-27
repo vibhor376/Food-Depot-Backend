@@ -1,7 +1,6 @@
 import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import session from "express-session";
-import cookieParser from "cookie-parser";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import cors from "cors";
 
@@ -12,7 +11,6 @@ dotenv.config({
 });
 
 //Using middlewares
-app.use(cookieParser());
 app.use(
     urlencoded({
         extended: true,
