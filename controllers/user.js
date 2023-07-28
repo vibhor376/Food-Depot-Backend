@@ -5,11 +5,15 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const myProfile = (req, res, next) => {
-    console.log(req.user);
-    res.status(200).json({
-        success: true,
-        user: req.user.id,
-    });
+    try {
+        console.log(req.user);
+        res.status(200).json({
+            success: true,
+            user: req.user.id,
+        });
+    } catch (error) {
+        res.status(401).json({ message: 'Not Logged In!!' });
+    }
 };
 
 export const register = async (req, res, next) => {
@@ -48,6 +52,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+        console.log(email, password);
         const user = await User.findOne({ email });
         // console.log(user);
         if (!user) {
