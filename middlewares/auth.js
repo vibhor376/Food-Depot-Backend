@@ -5,7 +5,7 @@ export const isAuthenticated = (req, res, next) => {
     console.log(token);
     if (!token) {
         return res.status(401).send({
-            err: "Invalid token"
+            err: "Not Logged In!!"
         });
     }
     try {
