@@ -9,7 +9,7 @@ export const myProfile = (req, res, next) => {
         console.log(req.user);
         res.status(200).json({
             success: true,
-            user: req.user.id,
+            user: req.user,
         });
     } catch (error) {
         res.status(401).json({ message: 'Not Logged In!!' });
