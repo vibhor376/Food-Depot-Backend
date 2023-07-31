@@ -29,7 +29,7 @@ export const placeOrder = asyncError(async (req, res, next) => {
         totalAmount,
         user,
     };
-
+    console.log(orderOptions)
     await Order.create(orderOptions);
 
     res.status(201).json({

@@ -3,7 +3,6 @@ import {
     getAdminStats,
     getAdminUsers,
     login,
-    logout,
     myProfile,
     register,
 } from "../controllers/user.js";
@@ -17,9 +16,6 @@ router.post('/register', register);
 router.post('/login', login);
 
 router.get("/me", isAuthenticated, myProfile);
-
-
-router.get("/logout", isAuthenticated, logout);
 
 // Admin Routes
 router.get("/admin/users", isAuthenticated, authorizeAdmin, getAdminUsers);

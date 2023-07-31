@@ -1,6 +1,6 @@
 import ErrorHandler from "../utils/ErrorHandler.js";
 import jwt from "jsonwebtoken";
-export const isAuthenticated = (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
     const token = req.header('auth-token');
     // console.log(token);
     if (!token) {

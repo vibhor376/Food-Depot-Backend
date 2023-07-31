@@ -4,9 +4,8 @@ import { Order } from "../models/Order.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const myProfile = (req, res, next) => {
+export const myProfile = async (req, res, next) => {
     try {
-        console.log(req.user);
         res.status(200).json({
             success: true,
             user: req.user,
@@ -36,10 +35,16 @@ export const register = async (req, res, next) => {
             {
                 user:
                 {
+                    name: newUser.name,
+                    email: newUser.email,
+                    role: newUser.role,
                     id: newUser._id
                 }
             },
-            process.env.JWT_SECRET);
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "1h",
+            });
         // await newUser.save();
 
         res.status(201).json({ message: 'User created successfully', token });
@@ -65,7 +70,15 @@ export const login = async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid password' });
         }
         const token = jwt.sign(
-            { user: { name: user.name, email, role: user.role, id: user._id } },
+            {
+                user:
+                {
+                    name: user.name,
+                    email,
+                    role: user.role,
+                    id: user._id
+                }
+            },
             process.env.JWT_SECRET,
             {
                 expiresIn: "1h",
@@ -76,19 +89,7 @@ export const login = async (req, res, next) => {
     }
 }
 
-export const logout = (req, res, next) => {
-    req.session.destroy((err) => {
-        if (err) return next(err);
-        res.clearCookie("connect.sid", {
-            secure: process.env.NODE_ENV === "development" ? false : true,
-            httpOnly: process.env.NODE_ENV === "development" ? false : true,
-            sameSite: process.env.NODE_ENV === "development" ? false : "none",
-        });
-        res.status(200).json({
-            message: "Logged Out",
-        });
-    });
-};
+
 
 export const getAdminUsers = asyncError(async (req, res, next) => {
     const users = await User.find({});
