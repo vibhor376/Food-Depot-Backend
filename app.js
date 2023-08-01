@@ -28,14 +28,7 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: function (origin, callback) {
-            // You can implement more advanced checks here if needed
-            if (origin === "https://fooddepot.vercel.app") {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
+        origin: "https://fooddepot.vercel.app",
         methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );
@@ -53,3 +46,8 @@ app.use("/api/v1", mailRoute);
 
 //Using Error middleware
 app.use(errorMiddleware);
+
+// Wildcard route to redirect all other requests to the frontend's root URL
+app.get("*", (req, res) => {
+    res.redirect("https://fooddepot.vercel.app");
+});
