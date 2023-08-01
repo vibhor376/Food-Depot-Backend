@@ -28,7 +28,7 @@ const mainMail = async (name, email, subject, message) => {
 
 export const contact = async (req, res, next) => {
     const { name, email, subject, message } = req.body;
-    // console.log(name, email, subject, message);
+    console.log(name, email, subject, message);
     try {
         await mainMail(name, email, subject, message);
         res.status(201).send({
