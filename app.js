@@ -28,7 +28,14 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: process.env.FRONTEND_URL,
+        origin: function (origin, callback) {
+            // You can implement more advanced checks here if needed
+            if (origin === "https://fooddepot.vercel.app") {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );
