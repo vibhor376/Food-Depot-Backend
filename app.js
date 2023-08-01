@@ -28,10 +28,15 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: "http://localhost:3000",
+        origin: "https://fooddepot.vercel.app/",
         methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );
+
+// Add the redirect rule to serve the frontend's index.html for all routes
+app.get("*", (req, res) => {
+    res.redirect("https://fooddepot.vercel.app/"); // Redirect to your frontend deployment URL
+});
 
 app.enable("trust proxy");
 
