@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(
     cors({
         credentials: true,
-        origin: "https://fooddepot.vercel.app/",
+        origin: "http://localhost:3000",
         methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );
