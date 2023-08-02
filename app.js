@@ -33,10 +33,6 @@ app.use(
     })
 );
 
-// Add the redirect rule to serve the frontend's index.html for all routes
-app.get("*", (req, res) => {
-    res.redirect("https://fooddepot.vercel.app/"); // Redirect to your frontend deployment URL
-});
 
 app.enable("trust proxy");
 
